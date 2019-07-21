@@ -18,7 +18,7 @@ RUN pip3 install requests
 
 RUN apt-get install -y libsm6 libxext6 tesseract-ocr libtesseract-dev libleptonica-dev pkg-config tesseract-ocr-rus
 RUN CPPFLAGS=-I/usr/local/include pip3 install tesserocr
-
+RUN apt-get install -y wget
 RUN  wget -O /documents_ocr/snils_graph/frozen_inference_graph.pb https://github.com/guleroman/documents_ocr/raw/master/snils_graph/frozen_inference_graph.pb
 
 
