@@ -6,10 +6,7 @@ import cv2
 import tesserocr
 import pandas as pd
 import json
-
-def recognition(path_to_image):
-
-    PATH_TO_CKPT = 'snils_graph/frozen_inference_graph.pb' # Путь к обученной модели нейросети
+PATH_TO_CKPT = 'snils_graph/frozen_inference_graph.pb' # Путь к обученной модели нейросети
     detection_graph = tf.Graph()
     with detection_graph.as_default():
         od_graph_def = tf.compat.v1.GraphDef()
@@ -17,11 +14,12 @@ def recognition(path_to_image):
             serialized_graph = fid.read()
             od_graph_def.ParseFromString(serialized_graph)
             tf.import_graph_def(od_graph_def, name='')
+def recognition(path_to_image):
 
     # Распознавание интересующих полей на документе       
     with detection_graph.as_default():
-        with tf.Session(graph=detection_graph) as sess:
-            sess.run(tf.global_variables_initializer())
+        with tf.compat.v1.Session(graph=detection_graph) as sess:
+            sess.run(tf.compat.v1.global_variables_initializer())
             image = Image.open(path_to_image)
             (im_width, im_height) = image.size 
             image_np = np.array(image.getdata()).reshape((im_height, im_width, 3)).astype(np.uint8)
